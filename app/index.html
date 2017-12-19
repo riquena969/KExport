@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>KExport</title>
+    <link rel="stylesheet" href="./css/themes/paper.css">
+    <link rel="stylesheet" href="./css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/custom.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>KExport</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#addConnection">Add connection</button>
+                    <button class="btn btn-warning">Configurations</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="addConnection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Connection</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 div form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" id="name" class="form-control" value="Localhost">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 div form-group">
+                            <label for="host">Host:</label>
+                            <input type="text" id="host" class="form-control" value="127.0.0.1">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 div form-group">
+                            <label for="port">Port:</label>
+                            <input type="text" id="port" class="form-control" value="3306">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 div form-group">
+                            <label for="user">User:</label>
+                            <input type="text" id="user" class="form-control" value="root">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 div form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" class="form-control" value="root">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="testConnection();"><i class="fa fa-plug" aria-hidden="true"></i> Test connection</button>
+                    <button type="button" class="btn btn-primary" onclick="saveConnection();"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Connection</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>window.$ = window.jQuery = require('./js/jquery.min.js');</script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/renderer.js"></script>
+</body>
+</html>

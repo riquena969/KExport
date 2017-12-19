@@ -1,0 +1,28 @@
+{
+  "name": "kexport",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://riquena969@github.com/riquena969/KExport.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/riquena969/KExport/issues"
+  },
+  "homepage": "https://github.com/riquena969/KExport#readme",
+  "dependencies": {
+    "electron": "^1.7.10",
+    "file": "^0.2.2",
+    "file-exists": "^5.0.0",
+    "jsonfile": "^4.0.0",
+    "mysql": "^2.15.0",
+    "sweetalert": "^2.1.0"
+  }
+}

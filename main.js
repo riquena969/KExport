@@ -1,7 +1,8 @@
 const { app , BrowserWindow , ipcMain } = require('electron');
-const mysql    = require('mysql');
-const jsonfile = require('jsonfile');
+const mysql      = require('mysql');
+const jsonfile   = require('jsonfile');
 const fileExists = require('file-exists');
+const fs         = require('fs');
 
 let mainWindow = null;
 
@@ -38,7 +39,13 @@ ipcMain.on('testConnection', (event, host, port, user, password) => {
 });
 
 ipcMain.on('saveConnection', (event, name, host, port, user, password, ignoreIfExists) => {
-    let fileLocation = `${__dirname}/connections/${name.toLowerCase()}.json`;
+    let fileDir      = `${app.getPath('userData')}/connections`;
+    let fileLocation = `${fileDir}/${name.toLowerCase()}.json`;
+
+    if (!fs.existsSync(fileDir)) {
+        fs.mkdirSync(fileDir);
+    }
+
     if (!ignoreIfExists) {
         let boolFileExists = fileExists.sync(fileLocation);
         if (boolFileExists) {
@@ -56,7 +63,8 @@ ipcMain.on('saveConnection', (event, name, host, port, user, password, ignoreIfE
 
     jsonfile.writeFile(fileLocation, data, {}, (err) => {
         if (err) {
-                mainWindow.send('saveConnection', false);
+            console.log(err);
+            mainWindow.send('saveConnection', false);
             return;
         }
         mainWindow.send('saveConnection', true);

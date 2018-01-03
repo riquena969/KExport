@@ -23,6 +23,7 @@
     "file-exists": "^5.0.0",
     "jsonfile": "^4.0.0",
     "mysql": "^2.15.0",
+    "mysqldump": "^1.4.2",
     "sweetalert": "^2.1.0"
   }
 }

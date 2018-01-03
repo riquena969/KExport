@@ -1,11 +1,13 @@
 const { ipcRenderer } = require('electron');
 const swal = require('sweetalert');
 
-let name     = document.getElementById('name');
-let host     = document.getElementById('host');
-let port     = document.getElementById('port');
-let user     = document.getElementById('user');
-let password = document.getElementById('password');
+let name        = document.getElementById('name');
+let host        = document.getElementById('host');
+let port        = document.getElementById('port');
+let user        = document.getElementById('user');
+let password    = document.getElementById('password');
+let connections = [];
+let connectionIdSelected;
 
 refreshConnections();
 
@@ -29,25 +31,27 @@ function refreshConnections() {
     ipcRenderer.send('refreshConnections');
 }
 
-ipcRenderer.on('refreshConnections', (event, connections) => {
+ipcRenderer.on('refreshConnections', (event, listConnections) => {
     let listConnectionsEl = $('#connections');
     $(listConnectionsEl).html('');
 
-    for (var i = 0; i < connections.length; i++) {
+    for (var i = 0; i < listConnections.length; i++) {
         $(listConnectionsEl).append(`
-            <div class="col-xs-4">
+            <div class="col-xs-6 col-sm-4 col-md-3">
                 <div class="col-xs-12 connection">
-                    <div class="name">${connections[i].name}</div>
-                    <div class="host">host: ${connections[i].host}</div>
+                    <div class="name">${listConnections[i].name}</div>
+                    <div class="host">host: ${listConnections[i].host}</div>
                     <div class="actions">
                         <span class="glyphicon glyphicon-pencil" title="Edit"></span>
                         <span class="glyphicon glyphicon-trash" title="Delete"></span>
                         <span class="glyphicon glyphicon-flash" title="Test"></span>
-                        <span class="glyphicon glyphicon-export" title="Dump Database"></span>
+                        <span class="glyphicon glyphicon-export" title="Dump Database" onclick="listDatabases(${i})"></span>
                     </div>
                 </div>
             </div>`);
     }
+
+    connections = listConnections;
 });
 
 ipcRenderer.on('saveConnection', (event, success) => {
@@ -61,3 +65,35 @@ ipcRenderer.on('saveConnection', (event, success) => {
 ipcRenderer.on('saveConnectionRewrite', (event) => {
     swal("Error", "The name is already in use", "error");
 });
+
+function listDatabases(connectionId) {
+    let data             = connections[connectionId];
+    let databases        = ipcRenderer.sendSync('listDatabases', data);
+    connectionIdSelected = connectionId;
+
+    if (databases.length == 0) {
+        alert('Connection failed');
+        return;
+    }
+
+    $('#databases').html('');
+    for (var i = 0; i < databases.length; i++) {
+        $('#databases').append(`<option value="${databases[i]}">${databases[i]}</option>`);
+    }
+
+    $('#dumpDatabase').modal('show');
+}
+
+function dumpDatabase() {
+    if (!$('#filename').val().length > 0 || !document.getElementById("fileLocation").files[0]) {
+        alert('Complete the form please');
+        return;
+    }
+    let location = document.getElementById("fileLocation").files[0].path + '/' + $('#filename').val();
+    
+    if (ipcRenderer.sendSync('dumpDatabase', connections[connectionIdSelected], $('#databases').val(), location)) {
+        alert('Dump complete!');
+    } else {
+        alert('Error');
+    }
+}

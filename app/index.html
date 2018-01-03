@@ -26,7 +26,7 @@
         </div>
         <div id="connections" class="row"></div>
     </div>
-    <div class="modal fade" id="addConnection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="addConnection" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -64,6 +64,45 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" onclick="testConnection();"><i class="fa fa-plug" aria-hidden="true"></i> Test connection</button>
                     <button type="button" class="btn btn-primary" onclick="saveConnection();"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save Connection</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dumpDatabase" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Dump Database</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="fileLocation">Location</label>
+                                <input type="file" id="fileLocation" webkitdirectory directory>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="filename">File Name</label>
+                                <input type="text" id="filename" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="databases">Database</label>
+                                <select name="database" id="databases" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="dumpDatabase();"><span class="glyphicon glyphicon-export"></span> Dump Database</button>
                 </div>
             </div>
         </div>

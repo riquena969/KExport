@@ -1,5 +1,6 @@
 const { app , BrowserWindow , ipcMain } = require('electron');
 const mysql      = require('mysql');
+const mysqlDump  = require('mysqldump');
 const jsonfile   = require('jsonfile');
 const fileExists = require('file-exists');
 const fs         = require('fs');
@@ -81,4 +82,49 @@ ipcMain.on('refreshConnections', function() {
     }
 
     mainWindow.send('refreshConnections', connections);
+});
+
+ipcMain.on('listDatabases', (event, connectionData) => {
+    try {
+        let databases = [];
+        let connection = mysql.createConnection({
+            host     : connectionData.host,
+            port     : connectionData.port,
+            user     : connectionData.user,
+            password : connectionData.password
+        });
+
+        connection.connect();
+
+        connection.query('SHOW DATABASES;', (error, results, fields) => {
+            if (error) {
+                event.returnValue = [];
+            } else {
+                for (var i = 0; i < results.length; i++) {
+                    databases[i] = results[i].Database;
+                }
+
+                event.returnValue = databases;
+            }
+        });
+
+        connection.end();
+    } catch(e) {
+        console.log(e);
+        event.returnValue = [];
+    }
+});
+
+ipcMain.on('dumpDatabase', (event, connectionData, database, location) => {
+    mysqlDump({
+        host: connectionData.host,
+        port: connectionData.port,
+        user: connectionData.user,
+        password: connectionData.password,
+        database: database,
+        ifNotExist: true,
+        dest: location
+    },function(err){
+        event.returnValue = err === null;
+    })
 });

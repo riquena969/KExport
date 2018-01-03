@@ -20,9 +20,11 @@
                 <div class="form-group">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#addConnection">Add connection</button>
                     <button class="btn btn-warning">Configurations</button>
+                    <button class="btn btn-info" onclick="refreshConnections()">Refresh</button>
                 </div>
             </div>
         </div>
+        <div id="connections" class="row"></div>
     </div>
     <div class="modal fade" id="addConnection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

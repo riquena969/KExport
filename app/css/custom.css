@@ -1,0 +1,10 @@
+.connection {
+	background-color: rgba(0,0,0,0.1);
+}
+.connection .name {
+	font-size: 16px;
+	font-weight: bolder
+}
+.connection .actions {
+	text-align: right
+}

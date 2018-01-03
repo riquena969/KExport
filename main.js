@@ -70,3 +70,15 @@ ipcMain.on('saveConnection', (event, name, host, port, user, password, ignoreIfE
         mainWindow.send('saveConnection', true);
     });
 });
+
+ipcMain.on('refreshConnections', function() {
+    let fileDir = `${app.getPath('userData')}/connections/`;
+    let files   = fs.readdirSync(fileDir);
+    let connections = [];
+
+    for (var i = 0; i < files.length; i++) {
+        connections.push(jsonfile.readFileSync(fileDir + files[i]));
+    }
+
+    mainWindow.send('refreshConnections', connections);
+});

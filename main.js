@@ -19,6 +19,9 @@ app.on('ready', () => {
     });
 
     mainWindow.loadURL(`file://${__dirname}/app/index.html`);
+
+    //Disable the default menubar
+    mainWindow.setMenu(null);
 });
 
 ipcMain.on('testConnection', (event, host, port, user, password) => {

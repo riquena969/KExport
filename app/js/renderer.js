@@ -64,6 +64,7 @@ ipcRenderer.on('refreshConnections', (event, listConnections) => {
 ipcRenderer.on('saveConnection', (event, success) => {
     if (success) {
         swal("Success", "Connection save successfully", "success");
+        $('#addConnection').modal('hide');
     } else {
         swal("Error", "Connection not saved", "error");
     }
@@ -97,10 +98,14 @@ function dumpDatabase() {
         return;
     }
     let location = document.getElementById("fileLocation").files[0].path + '/' + $('#filename').val();
-    
+
     if (ipcRenderer.sendSync('dumpDatabase', connections[connectionIdSelected], $('#databases').val(), location)) {
         alert('Dump complete!');
     } else {
         alert('Error');
     }
 }
+
+$('#addConnection').on('hide.bs.modal', () => {
+    refreshConnections();
+});

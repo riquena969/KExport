@@ -51,6 +51,13 @@ ipcRenderer.on('refreshConnections', (event, listConnections) => {
             </div>`);
     }
 
+    if (listConnections.length == 0) {
+        $(listConnectionsEl).append(`
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <p>No available connections</p>
+            </div>`);
+    }
+
     connections = listConnections;
 });
 

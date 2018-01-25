@@ -77,6 +77,9 @@ ipcMain.on('saveConnection', (event, name, host, port, user, password, ignoreIfE
 
 ipcMain.on('refreshConnections', function() {
     let fileDir = `${app.getPath('userData')}/connections/`;
+    if (!fs.existsSync(fileDir)) {
+        fs.mkdirSync(fileDir);
+    }
     let files   = fs.readdirSync(fileDir);
     let connections = [];
 

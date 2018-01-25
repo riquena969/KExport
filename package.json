@@ -18,9 +18,9 @@
   },
   "homepage": "https://github.com/riquena969/KExport#readme",
   "dependencies": {
-    "electron": "^1.7.10",
+    "electron": "^1.8.1",
     "file": "^0.2.2",
-    "file-exists": "^5.0.0",
+    "file-exists": "^5.0.1",
     "jsonfile": "^4.0.0",
     "mysql": "^2.15.0",
     "mysqldump": "^1.4.2",
